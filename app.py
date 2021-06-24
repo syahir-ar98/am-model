@@ -106,9 +106,9 @@ def requestModel():
 
         body = str.encode(json.dumps(data))
 
-        url = 'http://20.197.101.71:80/api/v1/service/predictionofbreastcancer/score'
+        url = 'http://20.205.241.126:80/api/v1/service/model/score'
         # Replace this with the API key for the web service
-        api_key = 'EcUaU8YamndhQj3m48BFQkAHUgcd8dEC' 
+        api_key = '0f20rXt3wcQOISbQ4wfUwcigPCjlOkZX' 
         headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
 
         req = urllib.request.Request(url, body, headers)
