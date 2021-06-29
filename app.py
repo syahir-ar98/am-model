@@ -106,9 +106,9 @@ def requestModel():
 
         body = str.encode(json.dumps(data))
 
-        url = 'http://20.197.76.113:80/api/v1/service/model/score'
+        url = 'http://20.197.78.22:80/api/v1/service/model/score'
         # Replace this with the API key for the web service
-        api_key = 'vPo4wSQcfsDGPa9P9YsUlcYbtGLIyhBu' 
+        api_key = 't6iGShxgd8VgVMYQY7VvOrOL2j55zDUJ' 
         headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
 
         req = urllib.request.Request(url, body, headers)
