@@ -1,42 +1,34 @@
 import urllib.request
-import io
 import json
+import io
 import os
 import ssl
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-def allowSelfSignedHttps(allowed):
-    # bypass the server certificate verification on client side
-    if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
-        ssl._create_default_https_context = ssl._create_unverified_context
-
-# this line is needed if you use self-signed certificate in your scoring service.
-allowSelfSignedHttps(True)
-
 app = Flask(__name__)
 cors = CORS(app)
 
-input1 = "0.8"
-input2 = "0.4"
-input3 = "0.7"
-input4 = "0.7"
-input5 = "0.3"
-input6 = "0.3"
-input7 = "0.4"
-input8 = "0.4"
-input9 = "0.4"
-input10 = "0.6"
-input11 = "0.2"
-input12 = "0.2"
-input13 = "0.4"
-input14 = "0.8"
-input15 = "0.4"
-input16 = "0.7"
-input17 = "0.8"
-input18 = "0.2"
-input19 = "0.3"
-input20 = "0.7"
+input1 = "20.57"
+input2 = "17.77"
+input3 = "132.9"
+input4 = "1326"
+input5 = "0.07864"
+input6 = "0.0869"
+input7 = "0.07017"
+input8 = "0.5435"
+input9 = "3.398"
+input10 = "74.08"
+input11 = "0.01308"
+input12 = "0.0186"
+input13 = "0.0134"
+input14 = "24.99"
+input15 = "23.41"
+input16 = "158.8"
+input17 = "1956"
+input18 = "0.1866"
+input19 = "0.2416"
+input20 = "0.186"
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -70,11 +62,11 @@ def requestModel():
         return "Hello World!"
 
     elif(request.method == "GET"):
-        
+
         # Request data goes here
         data = {
             "Inputs": {
-                "WebServiceInput0":
+                "input1":
                 [
                     {
                         'radius_mean': input1,
@@ -96,20 +88,21 @@ def requestModel():
                         'area_worst': input17,
                         'compactness_worst': input18,
                         'concavity_worst': input19,
-                        "'concave points_worst'": input20,
-                    },
+                        'concave points_worst': input20,
+                    }
                 ],
             },
-            "GlobalParameters": {
+            "GlobalParameters":  {
             }
         }
 
         body = str.encode(json.dumps(data))
 
-        url = 'http://20.197.78.22:80/api/v1/service/model/score'
+        url = 'https://ussouthcentral.services.azureml.net/workspaces/cdc3ed69ebd14c24a227cf0f2adee23c/services/fddbdaab586d4754888a48156af67ce3/execute?api-version=2.0&format=swagger'
         # Replace this with the API key for the web service
-        api_key = 't6iGShxgd8VgVMYQY7VvOrOL2j55zDUJ' 
-        headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
+        api_key = 'BJYhnd2W+f/3JPPmOOZRYcPhucK2Kr4KRZilG68V1gOws7jK6+zsIGL+Kg+yVWVo8P48zC5AVrm6geQIJyysAA=='
+        headers = {'Content-Type': 'application/json',
+                   'Authorization': ('Bearer ' + api_key)}
 
         req = urllib.request.Request(url, body, headers)
 
@@ -128,6 +121,7 @@ def requestModel():
             # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
             print(error.info())
             print(json.loads(error.read().decode("utf8", 'ignore')))
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='127.0.0.1', port=8000)
